@@ -1,2 +1,3 @@
 # a1016-qmk
-Apple Wireless Keyboard A1016 and QMK
+Please see my github pages [here](https://ivan98.github.io/a1016-qmk/).
+

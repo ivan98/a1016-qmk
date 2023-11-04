@@ -1,7 +1,7 @@
 
 # Apple Wireless Keyboard A1016
 
-Apple Wireless Keyboard A1016 is the Bluetooth wireless variant of the [Apple Keyboard A1048](https://deskthority.net/wiki/Apple_A1048) from 2003 to 2007. Pick 1 up for S$5 in Aug 2023, a little dirty but working.
+Apple Wireless Keyboard A1016 is the Bluetooth wireless variant of the [Apple Keyboard A1048](https://deskthority.net/wiki/Apple_A1048) from 2003 to 2007. Pick 1 up for S$5 in Aug 2023, a little dirty but working. Uses 4 x AA batteries.
 
 [![A1016 ISO](imgs/a1016_iso.jpg "A1016 ISO")](imgs/a1016_iso.jpg)
 
@@ -253,9 +253,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [![Test Setup](imgs/IMG_2585.jpg "Test Setup")](imgs/IMG_2585.jpg)
 
+#### Connection
+
+* Keyboard membranes, to
+* 3 x 10pin FPC (flexible printed circuits) at 1mm pitch, to
+* 3 x Kyocera 6232 breakout boards, to
+* 3 x 10pin female to male jumper cables, to
+* breadboard, to
+* WeAct RP2040, to
+* computer via USB-C cable
+
 [![WeAct RP2040](imgs/IMG_2586.jpg "WeAct RP2040")](imgs/IMG_2586.jpg)
 
-[![Kyocera 6232 breakout board](imgs/IMG_2587.jpg "Kyocera 6232 breakout board")](imgs/IMG_2587.jpg)
+[![3 x Kyocera 6232 breakout board](imgs/IMG_2587.jpg "3 x Kyocera 6232 breakout board")](imgs/IMG_2587.jpg)
 
 If you observe carefully, you will notice 1 side of the PCB is 0.5mm pitch while the other side is 1mm pitch. This is a cost saving feature by the Chinese manufacturer. In our case where we want 1mm pitch, only the 1mm pitch side is populated with the Kyocera 6232 (compatible) connector.
 
@@ -263,7 +273,7 @@ If you observe carefully, you will notice 1 side of the PCB is 0.5mm pitch while
 
 It works.
 
-## PS
+## Postscript
 
 ### Issue
 
@@ -280,9 +290,10 @@ Refer to keyboard matrix mapping above; the relevant section reproduce below:
 |Row|7|..|..|..|
 |Row|6|KC_D|..|KC_QUOTE|
 
-When you type '`c`', Row 8 Column 4 is activated.
-When you type '`d`', Row 6 Column 4 is activated.
-When you type '`<space>`', Row 8 Column 18 is activated.
+* When you type '`c`', Row 8 Column 4 is activated.
+* When you type '`d`', Row 6 Column 4 is activated.
+* When you type '`<space>`', Row 8 Column 18 is activated.
+
 Now if you've yet to release '`d`' (or RP2040 feels that you've not release '`d`'), then the [ghost](https://deskthority.net/wiki/Rollover,_blocking_and_ghosting#Ghosting) `'` key (Row 6 Column 18) will be inserted.
 
 This seems to be a keyboard matrix design issue, as the sequence '`cd `' is often used, and this issue often surfaced.
