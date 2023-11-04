@@ -5,7 +5,25 @@ Apple Wireless Keyboard A1016 is the Bluetooth wireless variant of the [Apple Ke
 
 [![A1016 ISO](imgs/a1016_iso.jpg "A1016 ISO")](imgs/a1016_iso.jpg)
 
+## Layers
+
+The keyboard consists of, from top to bottom:
+
+* Keycaps
+* Plastic plate
+* Rubber dome (individual per key)
+* Top membrane (flexible circuit)
+* Space membrane
+* Bottom membrane (flexible circuit)
+* Steel plate
+* Bottom plastic cover
+* Bottom acrylic case
+
+
+
 ## PCB
+
+The PCB is locked down via 2 x Y (tri-wing) screws. A [1.5 tri-wing screwdriver](https://item.taobao.com/item.htm?id=664751872893) can be purchased for S$0.69.
 
 The single PCB contains BCM2040 ([Product Brief](https://pdf.dzsc.com/88888/200673161938941.pdf)) controller and a SST39LF020 2Mbit flash.
 
@@ -52,11 +70,13 @@ Hence, the size of the keyboard matrix is 10 x 19, requiring 29 connections to t
 |Row| 1 | This track is used for Keycaps LED |
 |Row| 0 (right) | This track is used for Keycaps LED |
 
+Note Column 12 controls only 1 key (`LCMD`), similarly Column 16 has only `RCMD`. This seems wasteful, but maybe necessary to have key [rollover](https://deskthority.net/wiki/Rollover,_blocking_and_ghosting#Key_rollover) for the important '`COMMAND`' key.
+
 Given this mapping, 28 GPIO pins is needed on a MCU to control this keyboard. Ground for Keycaps LED can be taken from normal ground and GPIO is not needed.
 
 ## MCU
 
-28 GPIO pins (available for use) is a relatively high number for MCUs compatible with QMK. 1 suitable candidate is the [RP2040](https://www.raspberrypi.com/documentation/microcontrollers/rp2040.html).
+28 GPIO pins (available for use) is a relatively high number for [MCUs compatible with QMK](https://docs.qmk.fm/#/platformdev_selecting_arm_mcu). 1 suitable candidate is the [RP2040](https://docs.qmk.fm/#/platformdev_rp2040). Docs for RP2040 is [here](https://www.raspberrypi.com/documentation/microcontrollers/rp2040.html).
 
 Given its low cost, I've selected the RP2040 from [WeAct Studio](https://github.com/WeActStudio/WeActStudio.RP2040CoreBoard), Sep 2023.
 
@@ -93,7 +113,23 @@ Given its low cost, I've selected the RP2040 from [WeAct Studio](https://github.
 |GP28|Yes|Row 3|
 |GP29|Yes|Row 2|
 
+## KLE
+
+Visualize the keyboard @ [Keyboard Layout Editor (KLE)](http://www.keyboard-layout-editor.com/)
+
+```
+{name:"my_keyboard",author:"ivan98"},
+[{w:1.5},"\nesc","\nF1","\nF2","\nF3","\nF4","\nF5","\nF6","\nF7","\nF8","\nF9","\nF10","\nF11","\nF12",{w:1.5},"\nF13",{x:0.25},"\nF14","\nF15","\nF16",{x:0.25},"\n&#128265;","\n&#128266;","\n&#128264;","\n&#9167;",{w:3.25,h:6,d:true},"Default Layer"],
+["±\n§","!\n1","@\n2\n€","£\n3","$\n4","%\n5","^\n6","&\n7","*\n8","(\n9",")\n0","_\n-","+\n=",{w:2},"Backspace",{x:0.25},"\nhelp","\n&#8598;","\n&#8670;",{x:0.25},"\n&#8999;","\n=","\n/","\n*"],
+[{w:1.5},"\n&#8677;","\nQ","\nW","\nE","\nR","\nT","\nY","\nU","\nI","\nO","\nP","{\n[","}\n]",{x:0.25,w:1.25,h:2,w2:1.5,h2:1,x2:-0.25},"&#8617;",{x:0.25},"delete\n&#8998;","\n&#8600;","\n&#8671;",{x:0.25},"\n7","\n8","\n9","\n-"],
+[{w:1.75},"\n&#8682;","\nA","\nS","\nD","\nF","\nG","\nH","\nJ","\nK","\nL",":\n;","\"\n'","|\n\\",{x:4.75},"\n4","\n5","\n6","\n+"],
+[{w:1.25},"\n&#8679;","~\n`","\nZ","\nX","\nC","\nV","\nB","\nN","\nM","<\n,",">\n.","?\n/",{w:2.75},"\n&#8679;",{x:1.25},"\n↑",{x:1.25},"\n1","\n2","\n3",{h:2},"\n&#8965;"],
+[{w:1.5},"\nctrl",{w:1.25},"alt\n&#8997;",{w:1.5},"\nA\n\n&#8984;",{a:7,w:6.5},"",{a:4,w:1.5},"\nA\n\n&#8984;",{w:1.25},"alt\n&#8997;",{w:1.5},"\nctrl",{x:0.25},"\n←","\n↓","\n→",{x:0.25,w:2},"\n0","\n."]
+```
+
 ## QMK
+
+QMK (Quantum Mechanical Keyboard) is an open source community centered around developing computer input devices. Getting started guide is [here](https://docs.qmk.fm/).
 
 ### config.h
 ```
@@ -201,3 +237,53 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 ```
+
+## Testing / Breadboarding
+
+### BOM
+
+* 1 x [WeAct RP2040](https://item.taobao.com/item.htm?id=665800371434) 16MB for S$4.82 each
+* 3 x [Kyocera 6232 breakout board](https://item.taobao.com/item.htm?id=569968613033) 10-pin for S$0.40 each
+* 1 x [400pin breadboard](https://detail.tmall.com/item.htm?id=42679642291) for S$0.66 each
+* 1 bag of 20 pieces of 10pin [2.54mm header](https://detail.tmall.com/item.htm?id=620090455792) for S$0.40
+* 1 bundle of 40 pieces of [20 cm male-to-female cables](https://detail.tmall.com/item.htm?id=521360709504) for S$0.63
+* 1 bundle of 40 pieces of [10 cm male-to-male cables](https://detail.tmall.com/item.htm?id=521360709504) for S$0.72
+
+### Setup
+
+[![Test Setup](imgs/IMG_2585.jpg "Test Setup")](imgs/IMG_2585.jpg)
+
+[![WeAct RP2040](imgs/IMG_2586.jpg "WeAct RP2040")](imgs/IMG_2586.jpg)
+
+[![Kyocera 6232 breakout board](imgs/IMG_2587.jpg "Kyocera 6232 breakout board")](imgs/IMG_2587.jpg)
+
+If you observe carefully, you will notice 1 side of the PCB is 0.5mm pitch while the other side is 1mm pitch. This is a cost saving feature by the Chinese manufacturer. In our case where we want 1mm pitch, only the 1mm pitch side is populated with the Kyocera 6232 (compatible) connector.
+
+## Conclusion
+
+It works.
+
+## PS
+
+### Issue
+
+One often needs to type "`cd <directory>`". When you type fast, you get "`cd '<directory>`". Note the single quote after the space. This is the issue.
+
+### Analysis
+
+Refer to keyboard matrix mapping above; the relevant section reproduce below:
+
+
+|||D 4|..|R 18|
+|--|--|--|--|--|
+|Row|8|KC_C|..|KC_SPACE|
+|Row|7|..|..|..|
+|Row|6|KC_D|..|KC_QUOTE|
+
+When you type '`c`', Row 8 Column 4 is activated.
+When you type '`d`', Row 6 Column 4 is activated.
+When you type '`<space>`', Row 8 Column 18 is activated.
+Now if you've yet to release '`d`' (or RP2040 feels that you've not release '`d`'), then the [ghost](https://deskthority.net/wiki/Rollover,_blocking_and_ghosting#Ghosting) `'` key (Row 6 Column 18) will be inserted.
+
+This seems to be a keyboard matrix design issue, as the sequence '`cd `' is often used, and this issue often surfaced.
+(Or perhaps QMK's matrix scan rate is too low?)
