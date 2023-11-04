@@ -1,15 +1,15 @@
 
 # Apple Wireless Keyboard A1016
 
-Apple Wireless Keyboard A1016 is the Bluetooth wireless variant of the [Apple Keyboard A1048](https://deskthority.net/wiki/Apple_A1048) from 2003 to 2007.
+Apple Wireless Keyboard A1016 is the Bluetooth wireless variant of the [Apple Keyboard A1048](https://deskthority.net/wiki/Apple_A1048) from 2003 to 2007. Pick 1 up for S$5 in Aug 2023, a little dirty but working.
 
-![A1016 ISO](imgs/a1016_iso.jpg "A1016 ISO")
+[![A1016 ISO](imgs/a1016_iso.jpg "A1016 ISO")](imgs/a1016_iso.jpg)
 
 ## PCB
 
 The single PCB contains BCM2040 ([Product Brief](https://pdf.dzsc.com/88888/200673161938941.pdf)) controller and a SST39LF020 2Mbit flash.
 
-![PCB Top](imgs/pcb_0.jpg "PCB Top")
+[![PCB Top](imgs/pcb_0.jpg "PCB Top")](imgs/pcb_0.jpg)
 
 On the left of the PCB, there are 2 x black and 1 x brown connectors to the keyboard membrane / matrix.
 
@@ -17,7 +17,7 @@ These 3 connectors are [Kyocera 6232 series](https://ele.kyocera.com/en/product/
 
 The difference between black & brown is: black has top contacts, whereas brown has bottom contacts. The meaning of top/bottom is relative to the PCB: top means away from the PCB, bottom means nearest to the PCB.
 
-![PCB Bottom](imgs/pcb_1.jpg "PCB Bottom")
+[![PCB Bottom](imgs/pcb_1.jpg "PCB Bottom")](imgs/pcb_1.jpg)
 
 ## Membranes
 
@@ -25,11 +25,11 @@ There're 2 membranes, top and bottom, separated by a spacer membrane.
 
 I've labelled the keys ROW_COLUMN with rows (bottom to top) 0 to 5, and columns (left to right) A to U. Key `0A` at the bottom left, to key `5U` at the top right.
 
-![Membrane Top](imgs/mem_top.jpg "Membrane Top")
+[![Membrane Top](imgs/mem_top.jpg "Membrane Top")](imgs/mem_top.jpg)
 
 Traces in the top membrane leave the membrane at around the `5Q` key area, to connect to the PCB. These traces leave in 2 "bunches", the left bundle contains 12 tracks, the right 7 tracks. All in 19 tracks, these are the "_columns_" in the keyboard matrix.
 
-![Membrane Bottom](imgs/mem_bot.jpg "Membrane Bottom")
+[![Membrane Bottom](imgs/mem_bot.jpg "Membrane Bottom")](imgs/mem_bot.jpg)
 
 The bottom membrane is "flipped", so Key `0A` at the bottom right, and key `5U` at the top left.
 
@@ -54,9 +54,11 @@ Hence, the size of the keyboard matrix is 10 x 19, requiring 29 connections to t
 
 Given this mapping, 28 GPIO pins is needed on a MCU to control this keyboard. Ground for Keycaps LED can be taken from normal ground and GPIO is not needed.
 
+## MCU
+
 28 GPIO pins (available for use) is a relatively high number for MCUs compatible with QMK. 1 suitable candidate is the [RP2040](https://www.raspberrypi.com/documentation/microcontrollers/rp2040.html).
 
-Given its low cost, I've selected the RP2040 from [WeAct Studio](https://github.com/WeActStudio/WeActStudio.RP2040CoreBoard).
+Given its low cost, I've selected the RP2040 from [WeAct Studio](https://github.com/WeActStudio/WeActStudio.RP2040CoreBoard), Sep 2023.
 
 |WeAct RP2040 Pin|Available for our use|Our use|WeAct RP2040 Function|
 |--|--|--|--|
