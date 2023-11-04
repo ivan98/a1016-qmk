@@ -23,7 +23,7 @@ The difference between black & brown is: black has top contacts, whereas brown h
 
 There're 2 membranes, top and bottom, separated by a spacer membrane.
 
-I've labelled the keys ROW_COLUMN with rows (bottom to top) 0 to 5, and columns (left to right) A to U.
+I've labelled the keys ROW_COLUMN with rows (bottom to top) 0 to 5, and columns (left to right) A to U. Key `0A` at the bottom left, to key `5U` at the top right.
 
 ![Membrane Top](imgs/mem_top.jpg "Membrane Top")
 
@@ -31,7 +31,9 @@ Traces in the top membrane leave the membrane at around the `5Q` key area, to co
 
 ![Membrane Bottom](imgs/mem_bot.jpg "Membrane Bottom")
 
-Traces in the bottom membrane also leave the membrane at around the `5Q` key area, to connect to the PCB. These traces leave in 2 "bunches", the left bundle contains 3 tracks, the right 7 tracks. All in 10 tracks, these are the "_rows_" in the keyboard matrix.
+The bottom membrane is "flipped", so Key `0A` at the bottom right, and key `5U` at the top left.
+
+Traces in this bottom membrane also leave the membrane at around the `5Q` key area, to connect to the PCB. These traces leave in 2 "bunches", the left bundle contains 3 tracks, the right 7 tracks. All in 10 tracks, these are the "_rows_" in the keyboard matrix.
 
 Hence, the size of the keyboard matrix is 10 x 19, requiring 29 connections to the PCB, via 3 x 10pin Kyocera 6232 connectors.
 
@@ -49,3 +51,42 @@ Hence, the size of the keyboard matrix is 10 x 19, requiring 29 connections to t
 |Row| 2 | KC_TAB | KC_Q | KC_W | KC_E | KC_R | KC_T | KC_Y | KC_NO | KC_LEFT_SHIFT | KC_NO | KC_NO | KC_NO | KC_U | KC_I | KC_O | KC_NO | KC_P | KC_LEFT_BRACKET | KC_NO |
 |Row| 1 | This track is used for Keycaps LED |
 |Row| 0 (right) | This track is used for Keycaps LED |
+
+Given this mapping, 28 GPIO pins is needed on a MCU to control this keyboard. Ground for Keycaps LED can be taken from normal ground and GPIO is not needed.
+
+28 GPIO pins (available for use) is a relatively high number for MCUs compatible with QMK. 1 suitable candidate is the [RP2040](https://www.raspberrypi.com/documentation/microcontrollers/rp2040.html).
+
+Given its low cost, I've selected the RP2040 from [WeAct Studio](https://github.com/WeActStudio/WeActStudio.RP2040CoreBoard).
+
+|WeAct RP2040 Pin|Available for our use|Our use|WeAct RP2040 Function|
+|--|--|--|--|
+|GP0|Yes|Col 1|
+|GP1|Yes|Col 2|
+|GP2|Yes|Col 3|
+|GP3|Yes|Col 4|
+|GP4|Yes|Col 5|
+|GP5|Yes|Col 6|
+|GP6|Yes|Col 7|
+|GP7|Yes|Col 8|
+|GP8|Yes|Col 9|
+|GP9|Yes|Col 10|
+|GP10|Yes|Col 11|
+|GP11|Yes|Col 12|
+|GP12|Yes|Col 13|
+|GP13|Yes|Col 14|
+|GP14|Yes|Col 15|
+|GP15|Yes|Col 16|
+|GP16|Yes|Col 17|
+|GP17|Yes|Col 18|
+|GP18|Yes|Col 19|
+|GP19|Yes|Row 9|
+|GP20|Yes|Row 8|
+|GP21|Yes|Row 7|
+|GP22|Yes|Row 6|
+|GP23|No||User Key Button|
+|GP24|Yes|Keycaps LED|
+|GP25|No||WeAct RP2040 LED|
+|GP26|Yes|Row 5|
+|GP27|Yes|Row 4|
+|GP28|Yes|Row 3|
+|GP29|Yes|Row 2|
